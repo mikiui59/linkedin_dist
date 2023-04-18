@@ -1,0 +1,5 @@
+selenium
+webdriver_manager
+pandas
+tqdm
+git+https://github.com/joeyism/linkedin_scraper.git
