@@ -24,7 +24,15 @@ for i in j:
 
 chromedriver=ChromeDriverManager().install()
 
-driver = webdriver.Chrome(chromedriver)
+if 0:
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.debugger_address = "127.0.0.1:" + '9898'
+    chrome_options.add_argument("--user-data-dir ./ChromeProfile")
+    driver = webdriver.Chrome(chromedriver,chrome_options=chrome_options)
+else:
+    driver = webdriver.Chrome(chromedriver)
+
+
 
 driver.get('https://www.linkedin.com/login')
 
