@@ -5,6 +5,7 @@ from linkedin_scraper import Person,Company, actions
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager 
 import pandas as pd
+from tqdm import tqdm
 import os
 
 with open('./health-fitness.txt','r') as f:
@@ -25,9 +26,9 @@ chromedriver=ChromeDriverManager().install()
 
 driver = webdriver.Chrome(chromedriver)
 
-email = input('Email: ')
-password = input('Password: ')
-actions.login(driver, email, password) # if email and password isnt given, it'll prompt in terminal
+driver.get('https://www.linkedin.com/login')
+
+run= input('Run:')
 
 if os.path.isfile('company.json'):
     p=int(input("Json file found. Do you want to skip rescreping file (1 or 0): "))
@@ -35,7 +36,7 @@ else:
     p=0
 if p==0:
     data=[]
-    for i in range(0,len(company)):
+    for i in tqdm(range(0,len(company))):
         try:
             url=f'https://www.linkedin.com/search/results/companies/?keywords={company[i]}'
 
@@ -72,7 +73,7 @@ if p==0:
                     data.append({'i':i,'company':company[i],'url':link,'people':[l.get_attribute('href') for l in f0]})
 
             time.sleep(2+random.randint(-1,4)/5)
-            print(i)
+            #print(i)
         except Exception as e:
             print(i,e)
 
@@ -82,7 +83,7 @@ if p==0:
 df=[]
 
 
-for i in range(0,len(data)):
+for i in tqdm(range(0,len(data))):
 
     people=data[i]['people']
 
